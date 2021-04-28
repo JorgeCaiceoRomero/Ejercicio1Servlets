@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,21 +16,16 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
-import dao.DepartamentoDAO;
 import dao.EmpleadoDAO;
-import pojos.Departamento;
 import pojos.Empleado;
 import util.HibernateUtil;
 
-
 /**
- * Servlet implementation class MostrarDepartamentos
+ * Servlet implementation class MostrarEmpleados
  */
-@WebServlet("/MostrarDepartamentos")
-public class MostrarDepartamentos extends HttpServlet {
+@WebServlet("/MostrarEmpleados")
+public class MostrarEmpleados extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-      
 	
 	private static Logger logger = LogManager.getLogger(MostrarDepartamentos.class);
 	
@@ -41,7 +35,7 @@ public class MostrarDepartamentos extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MostrarDepartamentos() {
+    public MostrarEmpleados() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -60,13 +54,12 @@ public class MostrarDepartamentos extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		List<Departamento> listaDept = DepartamentoDAO.getAllDepartamentos(session);		
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		List<Empleado> listaEmp = EmpleadoDAO.getAllEmpleados(session);
-		printDeptos(out, listaDept);
-		//printEmpleados(out, listaEmp);
-		logger.info("Se han mostrado los departamentos");
+		printEmpleados(out, listaEmp);
+		logger.info("Se han mostrado los empleados");
 		out.close();
 	}
 
@@ -78,20 +71,28 @@ public class MostrarDepartamentos extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	private PrintWriter printDeptos(PrintWriter out, List<Departamento> lista) {
-			
+	
+	private PrintWriter printEmpleados(PrintWriter out, List<Empleado> lista) {
+		
 		PrintWriter res = out;
 		
 		res.println("<html>");
 		res.println("<title>Servlet de pruebas :)</title>");
 		res.println("<body>");
-		res.println("<div><h1>DEPARTAMENTOS</h1></div>");
+		res.println("<div><h1>EMPLEADOS</h1></div>");
 		res.print("<table border=\"2\">");
-		for (Departamento d : lista) {
+		for (Empleado d : lista) {
 			res.print("<tr>");
 			res.print("<td>"+d.getCodigo()+"</td>");
 			res.print("<td>"+d.getNombre()+"</td>");
-			res.print("<td>"+d.getCodResponsable()+"</td>");
+			res.print("<td>"+d.getApellido1()+"</td>");
+			res.print("<td>"+d.getApellido2()+"</td>");
+			res.print("<td>"+d.getLugarNacimiento()+"</td>");
+			res.print("<td>"+d.getFechaNacimiento()+"</td>");
+			res.print("<td>"+d.getDireccion()+"</td>");
+			res.print("<td>"+d.getTelefono()+"</td>");
+			res.print("<td>"+d.getPuesto()+"</td>");
+			res.print("<td>"+d.getCodDepartamento()+"</td>");
 			res.println("</tr>");
 		}
 		res.print("<table>");
@@ -101,6 +102,5 @@ public class MostrarDepartamentos extends HttpServlet {
 		
 		return res;
 	}
-	
-	
+
 }

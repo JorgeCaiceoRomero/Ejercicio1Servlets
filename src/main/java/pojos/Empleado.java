@@ -32,7 +32,7 @@ public class Empleado implements java.io.Serializable {
 	private String direccion;
 	@Column(name = "telefono", nullable = false)
 	private String telefono;
-	@Column(name = "puestp", nullable = false)
+	@Column(name = "puesto", nullable = false)
 	private String puesto;
 	@Column(name = "cod_departamento", nullable = false)
 	private int codDepartamento;
